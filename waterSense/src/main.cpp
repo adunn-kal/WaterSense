@@ -38,7 +38,7 @@
 #define CLOCK_PERIOD 10 ///< Clock task period in ms
 #define SLEEP_PERIOD 100 ///< Sleep task period in ms
 
-#define READ_TIME 20 ///< Length of time to measure in seconds
+#define READ_TIME 60 ///< Length of time to measure in seconds
 
 /**
  * @brief The minute allignment to center measurements about
@@ -363,7 +363,7 @@ void taskClock(void* params)
       }
     }
 
-    // Read
+    // Update
     else if (state == 1)
     {
       // Update the GPS
@@ -382,7 +382,7 @@ void taskClock(void* params)
       }
     }
 
-    // Update
+    // Read
     else if (state == 2)
     {
       myGPS.update(myClock);
@@ -416,7 +416,7 @@ void taskClock(void* params)
       sleepTime.put(myGPS.getSleepTime(myClock, MINUTE_ALLIGN, READ_TIME));
 
       // Disable GPS
-      myGPS.sleep();
+      myGPS.sleep(myClock);
       clockSleepReady.put(true);
     }
 
