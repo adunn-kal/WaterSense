@@ -27,18 +27,7 @@ SD_Data :: SD_Data(gpio_num_t pin)
 
     // Start SD stuff
     pinMode(CS, OUTPUT);
-    // assert(SD.begin(CS));
-
-    // Blink onboard LED while we wait for the SD card to mount
-    uint16_t timer = millis();
-    while (!SD.begin(CS))
-    {
-        if ((millis()-timer) > 500)
-        {
-            timer = millis();
-            digitalWrite(LED, 1-digitalRead(LED));
-        }
-    }
+    assert(SD.begin(CS));
 }
 
 /**

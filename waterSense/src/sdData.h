@@ -18,8 +18,6 @@ class SD_Data
         // Protected data
         gpio_num_t CS;
 
-        gpio_num_t LED = GPIO_NUM_2;
-
     public:
         // Public data
 
