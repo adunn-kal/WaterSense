@@ -37,15 +37,15 @@
 #define SD_PERIOD 10 ///< SD task period in ms
 #define CLOCK_PERIOD 10 ///< Clock task period in ms
 #define SLEEP_PERIOD 100 ///< Sleep task period in ms
+#define VOLTAGE_PERIOD 1000 ///< Voltage task period in ms
 
-#define READ_TIME 60 ///< Length of time to measure in seconds
+#define HI_READ 60*5
+#define MID_READ 60*2
+#define LOW_READ 60*1
 
-/**
- * @brief The minute allignment to center measurements about
- * @details If there is no GPS fix by the time the device goes to sleep, it will sleep for this amount of time
- * 
- */
-#define MINUTE_ALLIGN 2
+#define HI_ALLIGN 10
+#define MID_ALLIGN 15
+#define LOW_ALLIGN 30
 
 #define FIX_DELAY 120 ///< Seconds to wait for first GPS fix
 
@@ -97,6 +97,8 @@ RTC_DATA_ATTR uint32_t wakeCounter = 0; ///< A counter representing the number o
  */
 #define TEMP_EN GPIO_NUM_15
 
+#define ADC_PIN GPIO_NUM_26
+
 //-----------------------------------------------------------------------------------------------------||
 //-----------------------------------------------------------------------------------------------------||
 
@@ -134,6 +136,11 @@ Share<uint64_t> sleepTime("Sleep Time"); ///< The number of microseconds to slee
 Share<int16_t> distance("Distance"); ///< The distance measured by the ultrasonic sensor in millimeters
 Share<float> temperature("Temperature"); ///< The temperature in Fahrenheit
 Share<float> humidity("Humidity"); ///< The relative humidity in %
+
+// Duty Cycle
+Share<float> solar("Solar Voltage");
+Share<uint16_t> READ_TIME("Read Time");
+Share<uint16_t> MINUTE_ALLIGN("Minute Allign");
 
 
 //-----------------------------------------------------------------------------------------------------||
@@ -308,16 +315,16 @@ void taskSD(void* params)
       float myHum = humidity.get();
 
       // Get fix type
-      uint8_t myFix = fixType.get();
+      float solarVoltage = solar.get();
 
       String myTime = unixTime.get();
 
       // Write data to SD card
-      mySD.writeData(myFile, myDist, myTime, myTemp, myHum, myFix);
+      mySD.writeData(myFile, myDist, myTime, myTemp, myHum, solarVoltage);
       // myFile.printf("%s, %d, %f, %f, %d\n", unixTime.get(), myDist, myTemp, myHum, myFix);
 
       // Print data to serial monitor
-      Serial.printf("%s, %d, %0.2f, %0.2f, %d\n", displayTime.get(), myDist, myTemp, myHum, myFix);
+      Serial.printf("%s, %d, %0.2f, %0.2f, %0.2f\n", displayTime.get(), myDist, myTemp, myHum, solarVoltage);
 
       state = 1;
     }
@@ -413,7 +420,7 @@ void taskClock(void* params)
     else if (state == 3)
     {
       // Calculate sleep time
-      sleepTime.put(myGPS.getSleepTime(myClock, MINUTE_ALLIGN, READ_TIME));
+      sleepTime.put(myGPS.getSleepTime(myClock, MINUTE_ALLIGN.get(), READ_TIME.get()));
 
       // Disable GPS
       myGPS.sleep(myClock);
@@ -473,7 +480,7 @@ void taskSleep(void* params)
     else if (state == 1)
     {
       // If runTimer, go to state 2
-      if ((millis() - runTimer) > READ_TIME*1000)
+      if ((millis() - runTimer) > READ_TIME.get()*1000)
       {
         Serial.println("Sleep state 1 -> 2");
 
@@ -514,6 +521,53 @@ void taskSleep(void* params)
   }
 }
 
+/**
+ * @brief The voltage task
+ * @details Checks solar panel voltage and sets duty cycle
+ * 
+ * @param params A pointer to task parameters
+ */
+void taskVoltage(void* params)
+{
+  // Task Setup
+  uint8_t state = 0;
+
+  // Task Loop
+  while (true)
+  {
+    // Measure voltage
+    if (state == 0)
+    {
+      // Measure voltage
+      float voltage = 2*analogRead(ADC_PIN)*3.3/4095;
+      Serial.printf("Solar Voltage: %0.2f\n", voltage);
+      solar.put(voltage);
+      
+
+      if (voltage <= 2)
+      {
+        READ_TIME.put(LOW_READ);
+        MINUTE_ALLIGN.put(LOW_ALLIGN);
+      }
+
+      else if (voltage <= 5.5)
+      {
+        READ_TIME.put(MID_READ);
+        MINUTE_ALLIGN.put(MID_ALLIGN);
+      }
+
+      else
+      {
+        READ_TIME.put(HI_READ);
+        MINUTE_ALLIGN.put(HI_ALLIGN);
+      }
+    }
+    
+
+    vTaskDelay(VOLTAGE_PERIOD);
+  }
+}
+
 //-----------------------------------------------------------------------------------------------------||
 //-----------------------------------------------------------------------------------------------------||
 
@@ -537,12 +591,15 @@ void setup()
   Serial.println("\n\n\n\n");
 
   wakeReady.put(false);
+  READ_TIME.put(HI_READ);
+  MINUTE_ALLIGN.put(HI_ALLIGN);
 
   // Setup tasks
   xTaskCreate(taskMeasure, "Measurement Task", 8192, NULL, 3, NULL);
   xTaskCreate(taskSD, "SD Task", 8192, NULL, 7, NULL);
   xTaskCreate(taskClock, "Clock Task", 8192, NULL, 5, NULL);
   xTaskCreate(taskSleep, "Sleep Task", 8192, NULL, 1, NULL);
+  xTaskCreate(taskVoltage, "Voltage Task", 8192, NULL, 1, NULL);
 }
 
 void loop()
