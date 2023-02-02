@@ -27,7 +27,18 @@ SD_Data :: SD_Data(gpio_num_t pin)
 
     // Start SD stuff
     pinMode(CS, OUTPUT);
-    assert(SD.begin(CS));
+    // assert(SD.begin(CS));
+
+    // Blink onboard LED while we wait for the SD card to mount
+    uint16_t timer = millis();
+    while (!SD.begin(CS))
+    {
+        if ((millis()-timer) > 500)
+        {
+            timer = millis();
+            digitalWrite(LED, 1-digitalRead(LED));
+        }
+    }
 }
 
 /**
@@ -122,13 +133,13 @@ void SD_Data :: writeLog(String message, uint8_t month, uint8_t day,
  * @param unixTime The unix timestamp for when the data was recorded
  * @param temperature The current temperature measured by the temperature and humidity sensor
  * @param humidity The current humidity measured by the temperature and humidity sensor
- * @param hasFix Whether or not the GPS has a fix
+ * @param solarVoltage Voltage of solar panel
  * @return sensorData An object containing all of the data
  */
-void SD_Data :: writeData(File &dataFile, int32_t distance, String unixTime, float temperature, float humidity, bool hasFix)
+void SD_Data :: writeData(File &dataFile, int32_t distance, String unixTime, float temperature, float humidity, float solarVoltage)
 {
     dataFile.print(unixTime);
-    dataFile.printf(", %d, %f, %f, %d\n", distance, temperature, humidity, hasFix);
+    dataFile.printf(", %d, %f, %f, %f\n", distance, temperature, humidity, solarVoltage);
 }
 
 /**

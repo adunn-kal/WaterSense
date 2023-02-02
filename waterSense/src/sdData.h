@@ -18,6 +18,8 @@ class SD_Data
         // Protected data
         gpio_num_t CS;
 
+        gpio_num_t LED = GPIO_NUM_2;
+
     public:
         // Public data
 
@@ -34,7 +36,7 @@ class SD_Data
                       bool hasFix, float latitude, float longitude, float altitude);
 
         /// A method to write data to the sd card
-        void writeData(File &data_file, int32_t distance, String unixTime, float temperature, float humidity, bool hasFix);
+        void writeData(File &data_file, int32_t distance, String unixTime, float temperature, float humidity, float solarVoltage);
 
         void sleep(File &dataFile); ///< A method to close the current file and put the device to sleep
 };
