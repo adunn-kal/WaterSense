@@ -102,27 +102,22 @@ File SD_Data :: createFile(bool hasFix, uint32_t wakeCounter, String time)
 /**
  * @brief A method to write a log message to the SD card
  * 
- * @param message A pointer to the message to write
- * @param month The current month (1-12)
- * @param day The day of the month (1-31)
- * @param year The last two digits of the current year
- * @param time A pointer to the formatted time of day
+ * @param unixTime The unix timestamp
  * @param wakeCounter The number of times the MCU has woken from deep sleep
- * @param hasFix Whether or not the GPS has a fix
  * @param latitude The latitude as measured by the GPS
  * @param longitude The longitude as measured by the GPS
  * @param altitude The altitude as measured by the GPS
  */
-void SD_Data :: writeLog(String message, uint8_t month, uint8_t day,
-                         uint8_t year, String time, uint32_t wakeCounter,
-                         bool hasFix, float latitude, float longitude, float altitude)
+void SD_Data :: writeLog(String unixTime, uint32_t wakeCounter, float latitude, float longitude, float altitude)
 {
     //Open log file and write to it
     File logFile = SD.open("/logFile.txt", FILE_WRITE);
     if(!logFile) return;
-    //logFile.seek(logFile.size());
-    logFile.printf("%d/%d/20%d, %s: %s\nwake count: %d\n", month, day, year, time, message, wakeCounter);
-    if(hasFix) logFile.printf("%f, %f, %f\n", latitude, longitude, altitude);
+
+    logFile.printf("Wake Number: %d\n", wakeCounter);
+    logFile.println("Unix Time, Latitude, Longitude, Altitude");
+    logFile.print(unixTime);
+    logFile.printf(", %f, %f, %f\n", latitude, longitude, altitude);
     logFile.close();
 }
 

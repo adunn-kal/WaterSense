@@ -30,9 +30,7 @@ class SD_Data
         File createFile(bool hasFix, uint32_t wakeCounter, String time);
 
         /// A method to write a log message
-        void writeLog(String message, uint8_t month, uint8_t day,
-                      uint8_t year, String time, uint32_t wakeCounter,
-                      bool hasFix, float latitude, float longitude, float altitude);
+        void writeLog(String unixTime, uint32_t wakeCounter, float latitude, float longitude, float altitude);
 
         /// A method to write data to the sd card
         void writeData(File &data_file, int32_t distance, String unixTime, float temperature, float humidity, float solarVoltage);

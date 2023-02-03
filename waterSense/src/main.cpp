@@ -47,7 +47,7 @@
 #define MID_ALLIGN 15
 #define LOW_ALLIGN 30
 
-#define FIX_DELAY 10 ///< Seconds to wait for first GPS fix
+#define FIX_DELAY 120 ///< Seconds to wait for first GPS fix
 
 RTC_DATA_ATTR uint32_t wakeCounter = 0; ///< A counter representing the number of wake cycles
 
@@ -332,6 +332,17 @@ void taskSD(void* params)
     // Sleep
     else if (state == 3)
     {
+      // If we have a fix, write data to the log
+      if (fixType.get())
+      {
+        String tim = unixTime.get();
+        float lat = latitude.get();
+        float lon = longitude.get();
+        float alt = altitude.get();
+
+        mySD.writeLog(tim, wakeCounter, lat, lon, alt);
+      }
+
       // Close data file
       mySD.sleep(myFile);
       sdSleepReady.put(true);
@@ -540,7 +551,7 @@ void taskVoltage(void* params)
     {
       // Measure voltage
       float voltage = 2*analogRead(ADC_PIN)*3.3/4095;
-      Serial.printf("Solar Voltage: %0.2f\n", voltage);
+      // Serial.printf("Solar Voltage: %0.2f\n", voltage);
       solar.put(voltage);
       
 
