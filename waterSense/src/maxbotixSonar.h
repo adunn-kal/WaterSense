@@ -14,7 +14,7 @@ class MaxbotixSonar
 {
     protected:
         // Any protected class variables go here
-        uint8_t LED_BUILTIN = GPIO_NUM_2; ///< Builtin LED pin for MCU
+        uint8_t LED = GPIO_NUM_2; ///< Builtin LED pin for MCU
         uint16_t MONITOR_SPEED = 9600; ///< Serial port baud rate
         HardwareSerial* serialPort; ///< A pointer to a serial object
 

@@ -47,7 +47,7 @@
 #define MID_ALLIGN 15
 #define LOW_ALLIGN 30
 
-#define FIX_DELAY 120 ///< Seconds to wait for first GPS fix
+#define FIX_DELAY 10 ///< Seconds to wait for first GPS fix
 
 RTC_DATA_ATTR uint32_t wakeCounter = 0; ///< A counter representing the number of wake cycles
 

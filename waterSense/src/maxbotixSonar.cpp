@@ -38,6 +38,7 @@ void MaxbotixSonar :: begin(void)
     pinMode(EN, OUTPUT);
     digitalWrite(EN, HIGH); //Hold high to enable measuring with sonar
     serialPort->begin(MONITOR_SPEED, SERIAL_8N1, RX, TX);
+    pinMode(LED, OUTPUT);
 }
 
 /**
@@ -89,8 +90,8 @@ int32_t MaxbotixSonar :: measure(void)
     // Turn on LED if measuring properly
     // Maxbotix reports 500 if object is too close and 9999 is too far
     // Or you'll get 0 if wired improperly
-    if ((result > 500) and (result < 9999))  digitalWrite(LED_BUILTIN, HIGH);
-    else digitalWrite(LED_BUILTIN, LOW);
+    if ((result > 500) and (result < 9999))  digitalWrite(LED, HIGH);
+    else digitalWrite(LED, LOW);
 
     return result;
 }

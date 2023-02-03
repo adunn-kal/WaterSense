@@ -25,9 +25,21 @@ SD_Data :: SD_Data(gpio_num_t pin)
     // Update CS pin
     CS = pin;
 
+    pinMode(LED, OUTPUT);
+
     // Start SD stuff
     pinMode(CS, OUTPUT);
-    assert(SD.begin(CS));
+
+    uint16_t timer = millis();
+    while (!SD.begin(CS))
+    {
+        if ((millis() - timer) > 300)
+        {
+            timer = millis();
+            digitalWrite(LED, 1-digitalRead(LED));
+        }
+    }
+    digitalWrite(LED, LOW);
 }
 
 /**
