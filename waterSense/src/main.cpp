@@ -20,6 +20,7 @@
 #include "UnixTime.h"
 #include <esp_now.h>
 #include <WiFi.h>
+#include <driver/adc.h>
 
 // New Libraries
 #include "maxbotixSonar.h"
@@ -39,17 +40,31 @@
 #define SLEEP_PERIOD 100 ///< Sleep task period in ms
 #define VOLTAGE_PERIOD 1000 ///< Voltage task period in ms
 
-#define HI_READ 60*5
-#define MID_READ 60*2
-#define LOW_READ 60*1
-
-#define HI_ALLIGN 10
-#define MID_ALLIGN 15
-#define LOW_ALLIGN 30
+/**
+ * @brief Define this constant to enable variable duty cycle
+ * @details If undefined, HI_READ and HI_ALLIGN are used
+ * 
+ */
+#define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
+//----------------------||
+#define HI_READ 60*5  //||
+#define MID_READ 60*2 //||
+#define LOW_READ 60*1 //||
+//                    //||
+#define HI_ALLIGN 10  //||
+#define MID_ALLIGN 15 //||
+#define LOW_ALLIGN 30 //||
+//----------------------||
 
 #define FIX_DELAY 120 ///< Seconds to wait for first GPS fix
 
 RTC_DATA_ATTR uint32_t wakeCounter = 0; ///< A counter representing the number of wake cycles
+
+#define R1b 9.54 ///< Larger resistor for battery voltage divider
+#define R2b 2.96 ///< Smaller resistor for battery voltage divider
+
+#define R1s 10.0 ///< Resistor for solar panel voltage divider
+#define R2s 10.0 ///< Resistor for solar panel voltage divider
 
 //-----------------------------------------------------------------------------------------------------||
 //-----------------------------------------------------------------------------------------------------||
@@ -123,9 +138,9 @@ Share<bool> tempSleepReady("Temp Sleep Ready"); ///< A shared variable to indica
 Share<bool> sdSleepReady("SD Sleep Ready"); ///< A shared variable to indicate the SD card is ready to sleep
 
 // Shares from GPS Clock
-Share<float> latitude("Latitude"); ///< The current latitude
-Share<float> longitude("Longitude"); ///< The current longitude
-Share<float> altitude("Altitude"); ///< The current altitude
+Share<float> latitude("Latitude"); ///< The current latitude [Decimal degrees]
+Share<float> longitude("Longitude"); ///< The current longitude [Decimal degrees]
+Share<float> altitude("Altitude"); ///< The current altitude [meters above MSL]
 Share<uint8_t> fixType("Fix Type"); ///< The current fix type
 Share<String> unixTime("Unix Time"); ///< The current Unix timestamp relative to GMT
 Share<String> displayTime("Display Time"); ///< The current time of day relative to GMT
@@ -139,6 +154,7 @@ Share<float> humidity("Humidity"); ///< The relative humidity in %
 
 // Duty Cycle
 Share<float> solar("Solar Voltage");
+Share<float> battery("Battery Voltage");
 Share<uint16_t> READ_TIME("Read Time");
 Share<uint16_t> MINUTE_ALLIGN("Minute Allign");
 
@@ -314,17 +330,18 @@ void taskSD(void* params)
       // Get humidity data
       float myHum = humidity.get();
 
-      // Get fix type
+      // Get voltages
       float solarVoltage = solar.get();
+      float batteryVoltage = battery.get();
 
       String myTime = unixTime.get();
 
       // Write data to SD card
-      mySD.writeData(myFile, myDist, myTime, myTemp, myHum, solarVoltage);
+      mySD.writeData(myFile, myDist, myTime, myTemp, myHum, batteryVoltage, solarVoltage);
       // myFile.printf("%s, %d, %f, %f, %d\n", unixTime.get(), myDist, myTemp, myHum, myFix);
 
       // Print data to serial monitor
-      Serial.printf("%s, %d, %0.2f, %0.2f, %0.2f\n", displayTime.get(), myDist, myTemp, myHum, solarVoltage);
+      Serial.printf("%s, %d, %0.2f, %0.2f, %0.2f, %0.2f\n", displayTime.get(), myDist, myTemp, myHum, batteryVoltage, solarVoltage);
 
       state = 1;
     }
@@ -335,6 +352,7 @@ void taskSD(void* params)
       // If we have a fix, write data to the log
       if (fixType.get())
       {
+        Serial.println("Writing log file");
         String tim = unixTime.get();
         float lat = latitude.get();
         float lon = longitude.get();
@@ -550,28 +568,30 @@ void taskVoltage(void* params)
     if (state == 0)
     {
       // Measure voltage
-      float voltage = 2*analogRead(ADC_PIN)*3.3/4095;
-      // Serial.printf("Solar Voltage: %0.2f\n", voltage);
-      solar.put(voltage);
+      float solarVoltage = analogRead(ADC_PIN)*(3.3/4095) * ((R1s + R2s)/ R2s);
+      float batteryVoltage = adc1_get_raw(ADC1_CHANNEL_0)*(1.1/4095) * ((R1b + R2b)/ R2b);
+      solar.put(solarVoltage);
+      battery.put(batteryVoltage);
       
+      #ifdef VARIABLE_DUTY
+        if (batteryVoltage < 3.0)
+        {
+          READ_TIME.put(LOW_READ);
+          MINUTE_ALLIGN.put(LOW_ALLIGN);
+        }
 
-      if (voltage <= 2)
-      {
-        READ_TIME.put(LOW_READ);
-        MINUTE_ALLIGN.put(LOW_ALLIGN);
-      }
+        else if (batteryVoltage < 3.2)
+        {
+          READ_TIME.put(MID_READ);
+          MINUTE_ALLIGN.put(MID_ALLIGN);
+        }
 
-      else if (voltage <= 5.5)
-      {
-        READ_TIME.put(MID_READ);
-        MINUTE_ALLIGN.put(MID_ALLIGN);
-      }
-
-      else
-      {
-        READ_TIME.put(HI_READ);
-        MINUTE_ALLIGN.put(HI_ALLIGN);
-      }
+        else
+        {
+          READ_TIME.put(HI_READ);
+          MINUTE_ALLIGN.put(HI_ALLIGN);
+        }
+      #endif
     }
     
 
@@ -600,6 +620,10 @@ void setup()
   Serial.begin(115200);
   while (!Serial) {}
   Serial.println("\n\n\n\n");
+
+  adc1_config_width(ADC_WIDTH_12Bit);
+  adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_0db); //set reference voltage to internal
+    
 
   wakeReady.put(false);
   READ_TIME.put(HI_READ);
