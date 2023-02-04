@@ -118,13 +118,15 @@ void GpsClock :: update(Adafruit_GPS &GPS)
 
         fixType = GPS.fixquality; // Update the fix type
 
-        if (GPS.lat == 'N') latitude = GPS.latitude; // Update the latitude
-        else latitude = -1 * GPS.latitude;
+        // if (GPS.lat == 'N') latitude = GPS.latitudeDegrees; // Update the latitude
+        // else latitude = -1 * GPS.latitudeDegrees;
+        latitude = GPS.latitudeDegrees; // Update the latitude
 
-        if (GPS.lon == 'E') longitude = GPS.longitude; // Update the longitude
-        else longitude = -1 * GPS.longitude;
+        // if (GPS.lon == 'E') longitude = GPS.longitudeDegrees; // Update the longitude
+        // else longitude = -1 * GPS.longitudeDegrees;
+        longitude = GPS.longitudeDegrees; // Update the longitude
 
-        altitude = GPS.altitude; // Update the latitude
+        altitude = GPS.altitude; // Update the altitude (meters above MSL)
     }
 }
 
