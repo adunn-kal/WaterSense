@@ -33,7 +33,7 @@ class SD_Data
         void writeLog(String unixTime, uint32_t wakeCounter, float latitude, float longitude, float altitude);
 
         /// A method to write data to the sd card
-        void writeData(File &data_file, int32_t distance, String unixTime, float temperature, float humidity, float solarVoltage);
+        void writeData(File &data_file, int32_t distance, String unixTime, float temperature, float humidity, float batteryVoltage, float solarVoltage);
 
         void sleep(File &dataFile); ///< A method to close the current file and put the device to sleep
 };

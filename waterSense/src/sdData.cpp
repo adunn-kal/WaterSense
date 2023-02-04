@@ -60,8 +60,7 @@ void SD_Data :: writeHeader()
             "Cal Poly Tide Sensor\n"
             "https://github.com/adunn-kal/workSoftware/tree/master/waterSense\n\n"
             "Data File format:\n"
-            "Line   1: Latitude, Longitude, Altitude\n"
-            "Line 'n': UNIX Time, Distance (mm), External Temp (F), Humidity (%)\n");
+            "UNIX Time (GMT), Distance (mm), External Temp (F), Humidity (%), Battery Voltage (V), Solar Panel Voltage (V)\n");
         read_me.close();
 
         SD.mkdir("/Data");
@@ -115,9 +114,9 @@ void SD_Data :: writeLog(String unixTime, uint32_t wakeCounter, float latitude, 
     if(!logFile) return;
 
     logFile.printf("Wake Number: %d\n", wakeCounter);
-    logFile.println("Unix Time, Latitude, Longitude, Altitude");
+    logFile.println("UNIX Time (GMT), Latitude (decimal degrees), Longitude(decimal degrees), Altitude (meters above MSL)");
     logFile.print(unixTime);
-    logFile.printf(", %f, %f, %f\n", latitude, longitude, altitude);
+    logFile.printf(", %0.5f, %0.5f, %0.2f\n", latitude, longitude, altitude);
     logFile.close();
 }
 
@@ -132,10 +131,10 @@ void SD_Data :: writeLog(String unixTime, uint32_t wakeCounter, float latitude, 
  * @param solarVoltage Voltage of solar panel
  * @return sensorData An object containing all of the data
  */
-void SD_Data :: writeData(File &dataFile, int32_t distance, String unixTime, float temperature, float humidity, float solarVoltage)
+void SD_Data :: writeData(File &dataFile, int32_t distance, String unixTime, float temperature, float humidity, float batteryVoltage, float solarVoltage)
 {
     dataFile.print(unixTime);
-    dataFile.printf(", %d, %f, %f, %f\n", distance, temperature, humidity, solarVoltage);
+    dataFile.printf(", %d, %0.2f, %0.2f, %0.2f, %0.2f\n", distance, temperature, humidity, batteryVoltage, solarVoltage);
 }
 
 /**
