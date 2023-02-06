@@ -15,6 +15,5 @@ var hierarchy =
     [ "Print", null, [
       [ "TextQueue", "class_text_queue.html", null ]
     ] ],
-    [ "SD_Data", "class_s_d___data.html", null ],
-    [ "STM32Encoder", "class_s_t_m32_encoder.html", null ]
+    [ "SD_Data", "class_s_d___data.html", null ]
 ];

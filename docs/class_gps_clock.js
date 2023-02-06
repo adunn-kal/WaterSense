@@ -7,7 +7,7 @@ var class_gps_clock =
     [ "getSleepTime", "class_gps_clock.html#a9106e3662f7cb0d928b355476e63f55e", null ],
     [ "getUnixTime", "class_gps_clock.html#aba5c465dc489f75115175ef03d1cf075", null ],
     [ "read", "class_gps_clock.html#a90d880c68b52c89129b95505439c74af", null ],
-    [ "sleep", "class_gps_clock.html#a0ef6cb2c053d7b4e6f2804975e7de2af", null ],
+    [ "sleep", "class_gps_clock.html#a94383fb223224d6e22147f68919f9fe7", null ],
     [ "update", "class_gps_clock.html#aeeda5926034582a50c07a1a49e9e5f1d", null ],
     [ "altitude", "class_gps_clock.html#a34761b0f3b7097252ef50595cd322ed2", null ],
     [ "fixType", "class_gps_clock.html#a73dd377440044e026f214b86756fe839", null ],

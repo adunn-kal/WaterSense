@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['sd_5fdata_0',['SD_Data',['../class_s_d___data.html#a20e009f34a353607891cc0563b8f5ead',1,'SD_Data']]],
-  ['setup_1',['setup',['../encoder__test_8cpp.html#a7dfd9b79bc5a37d7df40207afbc5431f',1,'encoder_test.cpp']]],
-  ['share_2',['Share',['../class_share.html#a0948b04d00aef072f25af2f49ecfa259',1,'Share']]],
-  ['sleep_3',['sleep',['../class_adafruit_temp_humidity.html#a2ef63358a106b8db288e7223d77197ab',1,'AdafruitTempHumidity::sleep()'],['../class_gps_clock.html#a0ef6cb2c053d7b4e6f2804975e7de2af',1,'GpsClock::sleep()'],['../class_maxbotix_sonar.html#ae33f2653cb222a6c15efebd5ad45224a',1,'MaxbotixSonar::sleep()'],['../class_s_d___data.html#aaf5d95c1c65e027811215d70ecf26b6e',1,'SD_Data::sleep()']]],
-  ['stm32encoder_4',['STM32Encoder',['../class_s_t_m32_encoder.html#af12a9e4c2a45e9d096d0611a0cbc7589',1,'STM32Encoder']]]
+  ['take_0',['take',['../class_mutex.html#ae45adddf5c24ba65ef16767437f9c032',1,'Mutex']]],
+  ['taskclock_1',['taskClock',['../task_clock_8cpp.html#a5ad58f88372a9a3fc4b2aced7d09bb58',1,'taskClock(void *params):&#160;taskClock.cpp'],['../task_clock_8h.html#a5ad58f88372a9a3fc4b2aced7d09bb58',1,'taskClock(void *params):&#160;taskClock.cpp']]],
+  ['taskmeasure_2',['taskMeasure',['../task_measure_8cpp.html#a76131e011d13557f2e630ac82fbbb425',1,'taskMeasure(void *params):&#160;taskMeasure.cpp'],['../task_measure_8h.html#a76131e011d13557f2e630ac82fbbb425',1,'taskMeasure(void *params):&#160;taskMeasure.cpp']]],
+  ['tasksd_3',['taskSD',['../task_s_d_8cpp.html#ae43cfb8c580804aad9f59f4d8f7e847f',1,'taskSD(void *params):&#160;taskSD.cpp'],['../task_s_d_8h.html#ae43cfb8c580804aad9f59f4d8f7e847f',1,'taskSD(void *params):&#160;taskSD.cpp']]],
+  ['tasksleep_4',['taskSleep',['../task_sleep_8cpp.html#a478f76d1e9ee833a1fc133ccec2abf79',1,'taskSleep(void *params):&#160;taskSleep.cpp'],['../task_sleep_8h.html#a478f76d1e9ee833a1fc133ccec2abf79',1,'taskSleep(void *params):&#160;taskSleep.cpp']]],
+  ['taskvoltage_5',['taskVoltage',['../task_voltage_8cpp.html#a35625f1cec5bb5d768c4a66a7f6ef9d3',1,'taskVoltage(void *params):&#160;taskVoltage.cpp'],['../task_voltage_8h.html#a35625f1cec5bb5d768c4a66a7f6ef9d3',1,'taskVoltage(void *params):&#160;taskVoltage.cpp']]],
+  ['textqueue_6',['TextQueue',['../class_text_queue.html#a16098feae9a37a69f65dd3c1fa081491',1,'TextQueue']]]
 ];

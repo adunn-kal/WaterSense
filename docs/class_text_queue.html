@@ -17,7 +17,6 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -234,7 +233,7 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_full</b></td>
 <h1><a class="anchor" id="textqueue_usage"></a>
 Usage</h1>
 <p >The following bits of code show how to set up and use a queue to transfer text from one hypothetical task called <code>task_A</code> to another called <code>task_B</code>.</p>
-<p >Near the top of the file which contains <code><a class="el" href="encoder__test_8cpp.html#a7dfd9b79bc5a37d7df40207afbc5431f" title="The usual Arduino setup function which runs once as we start up.">setup()</a></code> we create a queue. The constructor of the <code><a class="el" href="class_text_queue.html" title="Implements a queue to transmit text from one RTOS task to another.">TextQueue</a></code> class is given the maximum number of characters which can be stored in the queue (100 in this example) and an optional name for the queue: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;PrintStream.h&gt;</span></div>
+<p >Near the top of the file which contains <code>setup()</code> we create a queue. The constructor of the <code><a class="el" href="class_text_queue.html" title="Implements a queue to transmit text from one RTOS task to another.">TextQueue</a></code> class is given the maximum number of characters which can be stored in the queue (100 in this example) and an optional name for the queue: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;PrintStream.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="textqueue_8h.html">textqueue.h</a>&quot;</span></div>
 <div class="line">...</div>
 <div class="line">TextQueue whiny_queue (100, <span class="stringliteral">&quot;Complaints&quot;</span>);</div>
@@ -342,7 +341,7 @@ Usage</h1>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/alexanderdunn/Desktop/Work/Work Software/WaterSense/ME507-Support/src/<a class="el" href="textqueue_8h_source.html">textqueue.h</a></li>
+<li>waterSense/src/waterSenseLibs/shares/<a class="el" href="textqueue_8h_source.html">textqueue.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

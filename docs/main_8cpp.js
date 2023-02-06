@@ -1,0 +1,25 @@
+var main_8cpp =
+[
+    [ "altitude", "main_8cpp.html#aae2d18221f0afbf25cb6a5a3dd743c60", null ],
+    [ "battery", "main_8cpp.html#af7305e328617f2e91695d27c68bc735b", null ],
+    [ "clockSleepReady", "main_8cpp.html#ab505b77af156c57d59155089934b0574", null ],
+    [ "dataReady", "main_8cpp.html#a35314e93e796825748d12f7d64e5801b", null ],
+    [ "displayTime", "main_8cpp.html#a4083275c7dcd3eb54b88ce3c4cc346c7", null ],
+    [ "distance", "main_8cpp.html#a32fcd993907942ea89f8876c618c903f", null ],
+    [ "fixType", "main_8cpp.html#a20b0aee3fae3afea32b1018a622a62ec", null ],
+    [ "humidity", "main_8cpp.html#a2895faa0996a3b122ae3a7b73f30cd11", null ],
+    [ "latitude", "main_8cpp.html#a2911f20508642d61e5531d98e7c0d539", null ],
+    [ "longitude", "main_8cpp.html#a6308c32df5326731826323752ea5517f", null ],
+    [ "MINUTE_ALLIGN", "main_8cpp.html#a082059f3ed3a1f2524bc5d438b859c21", null ],
+    [ "READ_TIME", "main_8cpp.html#a8f4e33fb0cc737269a6296bb002090c9", null ],
+    [ "sdSleepReady", "main_8cpp.html#a5bf29fd43eb744c3a8ab264bedde9438", null ],
+    [ "sleepFlag", "main_8cpp.html#a9a0088584c21931381993c26940c31e9", null ],
+    [ "sleepTime", "main_8cpp.html#a8a0fb35a4d6dbb6d3ed9587919dd1e1c", null ],
+    [ "solar", "main_8cpp.html#aa0d3dd2fe38870445b013428f061d6f6", null ],
+    [ "sonarSleepReady", "main_8cpp.html#a1d54b5c8cda6ea972c6386e0c231b0fb", null ],
+    [ "temperature", "main_8cpp.html#a461ae938df5021dfa0bb52f53eb3c1ad", null ],
+    [ "tempSleepReady", "main_8cpp.html#a8effab9d46d618c5288ce42bb8f2458b", null ],
+    [ "unixTime", "main_8cpp.html#a2785c94aaed7ec20c2b903a8f3838876", null ],
+    [ "wakeCounter", "main_8cpp.html#af2296f2e243be9a63b2e7709306bd802", null ],
+    [ "wakeReady", "main_8cpp.html#a719537883e8ea9d1a30fe3ca8be06ec4", null ]
+];

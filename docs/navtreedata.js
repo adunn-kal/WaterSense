@@ -25,15 +25,7 @@
 var NAVTREE =
 [
   [ "WaterSense", "index.html", [
-    [ "adafruitTempHumidity", "md___users_alexanderdunn__desktop__work__work__software__water_sense_adafruit_temp_humidity__r_e_a_d_m_e.html", null ],
-    [ "gpsClock", "md___users_alexanderdunn__desktop__work__work__software__water_sense_gps_clock__r_e_a_d_m_e.html", null ],
-    [ "maxbotixSonar", "md___users_alexanderdunn__desktop__work__work__software__water_sense_maxbotix_sonar__r_e_a_d_m_e.html", null ],
-    [ "ME507 Class Support Programs", "md___users_alexanderdunn__desktop__work__work__software__water_sense__m_e507__support__r_e_a_d_m_e.html", [
-      [ "Documentation", "md___users_alexanderdunn__desktop__work__work__software__water_sense__m_e507__support__r_e_a_d_m_e.html#autotoc_md4", null ]
-    ] ],
-    [ "WaterSense", "md___users_alexanderdunn__desktop__work__work__software__water_sense__r_e_a_d_m_e.html", null ],
-    [ "sdData", "md___users_alexanderdunn__desktop__work__work__software__water_sense_sd_data__r_e_a_d_m_e.html", null ],
-    [ "WaterSense", "md___users_alexanderdunn__desktop__work__work__software__water_sense_water_sense__r_e_a_d_m_e.html", null ],
+    [ "WaterSense", "md_water_sense__r_e_a_d_m_e.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],

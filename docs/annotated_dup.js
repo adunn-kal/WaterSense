@@ -9,6 +9,5 @@ var annotated_dup =
     [ "Queue", "class_queue.html", "class_queue" ],
     [ "SD_Data", "class_s_d___data.html", "class_s_d___data" ],
     [ "Share", "class_share.html", "class_share" ],
-    [ "STM32Encoder", "class_s_t_m32_encoder.html", "class_s_t_m32_encoder" ],
     [ "TextQueue", "class_text_queue.html", "class_text_queue" ]
 ];

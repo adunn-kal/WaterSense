@@ -17,7 +17,6 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -176,7 +175,7 @@ class Share&lt; DataType &gt;</div><p >Class for data to be shared in a thread-s
 <h1><a class="anchor" id="usage_share"></a>
 Usage</h1>
 <p >The following bits of code show how to set up and use a share to transfer data of type <code>uint16_t</code> from one hypothetical task called <code>task_A</code> to another called <code>task_B</code>.</p>
-<p >In the file which contains <code><a class="el" href="encoder__test_8cpp.html#a7dfd9b79bc5a37d7df40207afbc5431f" title="The usual Arduino setup function which runs once as we start up.">setup()</a></code> we create a shared data object. The constructor of the <code>Share&lt;uint16_t&gt;</code> class is given a name for the share; the name will be shown on system diagnostic printouts. If it is desired to print diagnostic information to a serial monitor, a pointer to an output stream may also be given: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="taskshare_8h.html">taskshare.h</a>&quot;</span></div>
+<p >In the file which contains <code>setup()</code> we create a shared data object. The constructor of the <code>Share&lt;uint16_t&gt;</code> class is given a name for the share; the name will be shown on system diagnostic printouts. If it is desired to print diagnostic information to a serial monitor, a pointer to an output stream may also be given: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="taskshare_8h.html">taskshare.h</a>&quot;</span></div>
 <div class="line">...</div>
 <div class="line">Share&lt;uint16_t&gt; my_share (<span class="stringliteral">&quot;Data_3&quot;</span>, &amp;Serial);</div>
 <div class="ttc" id="ataskshare_8h_html"><div class="ttname"><a href="taskshare_8h.html">taskshare.h</a></div><div class="ttdoc">Data which can be shared between tasks in a thread-safe manner.</div></div>
@@ -549,7 +548,7 @@ template&lt;class DataType &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/alexanderdunn/Desktop/Work/Work Software/WaterSense/ME507-Support/src/<a class="el" href="taskshare_8h_source.html">taskshare.h</a></li>
+<li>waterSense/src/waterSenseLibs/shares/<a class="el" href="taskshare_8h_source.html">taskshare.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

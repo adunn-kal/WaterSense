@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['operator_3c_3c_0',['operator&lt;&lt;',['../class_queue.html#a61f764fa35a4880b277a2b6d23651f45',1,'Queue::operator&lt;&lt;()'],['../class_share.html#ab4990baa4c1ea5572618520c5a3b39e7',1,'Share::operator&lt;&lt;()']]],
-  ['operator_3e_3e_1',['operator&gt;&gt;',['../class_queue.html#adc6d1c4c6d4c3e397aa4f194f4ad2ffb',1,'Queue::operator&gt;&gt;()'],['../class_share.html#a38fb597f730afaf9fac97240b0286f55',1,'Share::operator&gt;&gt;()']]]
+  ['peek_0',['peek',['../class_queue.html#a44557ed37c98580b87d0196908330bcc',1,'Queue::peek(dataType &amp;recv_item)'],['../class_queue.html#a98b721db58328663cc8d5466d757fa51',1,'Queue::peek(void)']]],
+  ['print_5fall_5fshares_1',['print_all_shares',['../baseshare_8cpp.html#a4700b5f4d08a994556955c2aa75f3236',1,'print_all_shares(Print &amp;printer):&#160;baseshare.cpp'],['../baseshare_8h.html#a4700b5f4d08a994556955c2aa75f3236',1,'print_all_shares(Print &amp;printer):&#160;baseshare.cpp']]],
+  ['print_5fin_5flist_2',['print_in_list',['../class_base_share.html#a6f72027a717afada4679fd08d08bb4b6',1,'BaseShare::print_in_list()'],['../class_queue.html#ace8d2d512e49f018c5e2df4b5a2bf810',1,'Queue::print_in_list()'],['../class_share.html#afbda236ee6fe392200a766d7e4e8a080',1,'Share::print_in_list()']]],
+  ['put_3',['put',['../class_queue.html#ae7859c00b2e2818183bfd54979091e60',1,'Queue::put()'],['../class_share.html#aef08e3bc0686d8032f40613be8c13df4',1,'Share::put()']]]
 ];

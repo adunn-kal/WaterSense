@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['queue_0',['Queue',['../class_queue.html#ae4a3fd660457ea5f5a4f3605322db150',1,'Queue']]]
+  ['read_0',['read',['../class_gps_clock.html#a90d880c68b52c89129b95505439c74af',1,'GpsClock']]]
 ];
