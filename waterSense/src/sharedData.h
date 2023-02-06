@@ -15,6 +15,9 @@
 //-----------------------------------------------------------------------------------------------------||
 //---------- Shares & Queues --------------------------------------------------------------------------||
 
+// Non-Volatile Memory
+extern RTC_DATA_ATTR uint32_t wakeCounter; ///< A counter representing the number of wake cycles
+
 // Flags
 extern Share<bool> dataReady;
 extern Share<bool> sleepFlag;

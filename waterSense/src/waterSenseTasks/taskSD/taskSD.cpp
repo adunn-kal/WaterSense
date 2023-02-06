@@ -93,7 +93,7 @@ void taskSD(void* params)
       state = 1;
     }
 
-    // Sleep
+    // Write Log
     else if (state == 3)
     {
       // If we have a fix, write data to the log
@@ -108,6 +108,12 @@ void taskSD(void* params)
         mySD.writeLog(tim, wakeCounter, lat, lon, alt);
       }
 
+      state = 4;
+    }
+
+    // Sleep
+    else if (state == 4)
+    {
       // Close data file
       mySD.sleep(myFile);
       sdSleepReady.put(true);

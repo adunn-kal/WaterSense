@@ -23,20 +23,18 @@
  * @details If undefined, HI_READ and HI_ALLIGN are used
  * 
  */
-#define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
+// #define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
 //----------------------||
-#define HI_READ 60*5  //||
+#define HI_READ 60*1  //||
 #define MID_READ 60*2 //||
 #define LOW_READ 60*1 //||
 //                    //||
-#define HI_ALLIGN 10  //||
+#define HI_ALLIGN 30  //||
 #define MID_ALLIGN 15 //||
 #define LOW_ALLIGN 30 //||
 //----------------------||
 
 #define FIX_DELAY 120 ///< Seconds to wait for first GPS fix
-
-extern RTC_DATA_ATTR uint32_t wakeCounter; ///< A counter representing the number of wake cycles
 
 #define R1b 9.54 ///< Larger resistor for battery voltage divider
 #define R2b 2.96 ///< Smaller resistor for battery voltage divider

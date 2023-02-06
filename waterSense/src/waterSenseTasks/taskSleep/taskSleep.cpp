@@ -82,7 +82,7 @@ void taskSleep(void* params)
       uint64_t mySleep = sleepTime.get();
 
       // Go to sleep
-      Serial.printf("Going to sleep for %d seconds\n", mySleep/1000000);
+      Serial.printf("%s: Going to sleep for %d seconds\n", displayTime.get(), mySleep/1000000);
       
       gpio_deep_sleep_hold_en();
       esp_sleep_enable_timer_wakeup(mySleep);

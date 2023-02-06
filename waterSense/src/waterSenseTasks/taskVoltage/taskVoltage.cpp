@@ -38,8 +38,18 @@ void taskVoltage(void* params)
     if (state == 0)
     {
       // Measure voltage
-      float solarVoltage = analogRead(ADC_PIN)*(3.3/4095) * ((R1s + R2s)/ R2s);
-      float batteryVoltage = adc1_get_raw(ADC1_CHANNEL_0)*(1.1/4095) * ((R1b + R2b)/ R2b);
+      float solarVoltage = 0.0;
+      float batteryVoltage = 0.0;
+      
+      for (uint8_t i = 0; i < 50; i++)
+      {
+        solarVoltage += analogRead(ADC_PIN)*(3.3/4095) * ((R1s + R2s)/ R2s);
+        batteryVoltage += adc1_get_raw(ADC1_CHANNEL_0)*(1.1/4095) * ((R1b + R2b)/ R2b);
+      }
+
+      solarVoltage /= 50.0;
+      batteryVoltage /= 50.0;
+  
       solar.put(solarVoltage);
       battery.put(batteryVoltage);
       
