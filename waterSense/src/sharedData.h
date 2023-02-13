@@ -17,6 +17,16 @@
 
 // Non-Volatile Memory
 extern RTC_DATA_ATTR uint32_t wakeCounter; ///< A counter representing the number of wake cycles
+extern RTC_DATA_ATTR uint32_t lastKnownUnix;
+extern RTC_DATA_ATTR uint32_t unixRtcStart;
+extern RTC_DATA_ATTR bool internal;
+
+// Watchdog Checks
+extern Share<bool> clockCheck;
+extern Share<bool> sleepCheck;
+extern Share<bool> measureCheck;
+extern Share<bool> voltageCheck;
+extern Share<bool> sdCheck;
 
 // Flags
 extern Share<bool> dataReady;

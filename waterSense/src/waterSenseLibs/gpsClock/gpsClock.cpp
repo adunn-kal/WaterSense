@@ -42,10 +42,10 @@ Adafruit_GPS GpsClock :: begin()
     serialPort->begin(MONITOR_SPEED, SERIAL_8N1, RX, TX);
     Adafruit_GPS GPS(serialPort);
 
-    // gpio_hold_dis(EN);
-    // pinMode(EN, OUTPUT);
-    // digitalWrite(EN, HIGH);
-    GPS.wakeup(); // Testing wakeup vs standby
+    gpio_hold_dis(EN);
+    pinMode(EN, OUTPUT);
+    digitalWrite(EN, HIGH);
+    // GPS.wakeup(); // Testing wakeup vs standby
 
     // 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
     GPS.begin(9600);
@@ -167,7 +167,7 @@ String GpsClock :: getUnixTime(Adafruit_GPS &GPS)
     UnixTime stamp(0);
     stamp.setDateTime(2000 + GPS.year, GPS.month, GPS.day, GPS.hour, GPS.minute, GPS.seconds);
 
-    uint32_t unix = stamp.getUnix() + UNIX_OFFSET;
+    unix = stamp.getUnix() + UNIX_OFFSET;
 
     uint32_t myMillis = (millis() - millisOffset)%1000;
     String unixString = String(unix) + ".";
@@ -225,7 +225,7 @@ uint64_t GpsClock :: getSleepTime(Adafruit_GPS &GPS, uint8_t MINUTE_ALLIGN, uint
         // Calculate next time in uS until next measurement interval
         uint64_t next_measurement = (MINUTE_ALLIGN - (GPS.minute % MINUTE_ALLIGN)) * (60 * 1000000);
         next_measurement -= GPS.seconds * 1000000;
-        next_measurement -= ((millis() - millisOffset) % 1000) * 1000;
+        // next_measurement -= ((millis() - millisOffset) % 1000) * 1000;
 
         // Subtract off half of the read time
         if (next_measurement > (READ_TIME*1000000/2))
@@ -252,7 +252,79 @@ uint64_t GpsClock :: getSleepTime(Adafruit_GPS &GPS, uint8_t MINUTE_ALLIGN, uint
  */
 void GpsClock :: sleep(Adafruit_GPS &gps)
 {
-    // digitalWrite(EN, LOW);
-    // gpio_hold_en(EN);
-    gps.standby();
+    digitalWrite(EN, LOW);
+    gpio_hold_en(EN);
+    // gps.standby();
+}
+
+
+void GpsClock :: updateInternal(Adafruit_GPS &GPS, ESP32Time &RTC)
+{
+    uint32_t myMillis = (millis() - millisOffset)%1000;
+    uint8_t mySecond = GPS.seconds;
+    uint8_t myMinute = GPS.minute;
+    uint8_t myHour = GPS.hour;
+    uint8_t myDay = GPS.day;
+    uint8_t myMonth = GPS.month;
+    uint16_t myYear = 2000 + GPS.year;
+
+    // Serial.printf("%d %d, %d\n", myMonth, myDay, myYear);
+    // Serial.printf("%d:%d:%d.%3d\n", myHour, myMinute, mySecond, myMillis);
+
+    // Does not work for date, but will get the time correct for display time
+    RTC.setTime(mySecond, myMinute, myHour, myDay, myMonth, myYear, myMillis);
+
+    lastGpsUnix = unix;
+    internalStart = RTC.getEpoch();
+}
+
+
+String GpsClock :: getUnixInternal(ESP32Time &RTC)
+{
+    // uint32_t unix = RTC.getEpoch();
+    // String unixString = String(unix);
+
+    // Update unix counter
+    uint32_t diff = RTC.getEpoch() - internalStart;
+    unix = lastGpsUnix + diff;
+
+    uint32_t myMillis = RTC.getMillis();
+
+    String unixString = String(unix) + ".";
+
+    if (myMillis < 100) unixString += "0";
+    if (myMillis < 10) unixString += "0";
+    unixString += String(myMillis);
+
+
+    return unixString;
+}
+
+String GpsClock :: getDisplayInternal(ESP32Time &RTC)
+{
+    String displayString = RTC.getTime() + ".";
+
+    uint32_t myMillis = RTC.getMillis();
+    if (myMillis < 100) displayString += "0";
+    if (myMillis < 10) displayString += "0";
+    displayString += String(myMillis);
+
+    return displayString;
+}
+
+uint64_t GpsClock :: getSleepInternal(ESP32Time &RTC, uint8_t MINUTE_ALLIGN, uint8_t READ_TIME)
+{
+    // Calculate next time in uS until next measurement interval
+    uint64_t next_measurement = (MINUTE_ALLIGN - (RTC.getMinute() % MINUTE_ALLIGN)) * (60 * 1000000);
+    next_measurement -= RTC.getSecond() * 1000000;
+    next_measurement -= (RTC.getMillis() % 1000) * 1000;
+
+    // Subtract off half of the read time
+    if (next_measurement > (READ_TIME*1000000/2))
+    {
+        next_measurement -= READ_TIME*1000000/2;
+        return next_measurement;
+    }
+
+    else return 1;
 }

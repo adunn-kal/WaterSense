@@ -27,7 +27,6 @@ void taskMeasure(void* params)
   MaxbotixSonar mySonar(&Serial1, SONAR_RX, SONAR_TX, SONAR_EN);
   AdafruitTempHumidity myTemp(TEMP_EN, TEMP_SENSOR_ADDRESS);
 
-
   // Task Setup
   uint8_t state = 0;
 
@@ -93,6 +92,7 @@ void taskMeasure(void* params)
       tempSleepReady.put(true);
     }
 
+    measureCheck.put(true);
     vTaskDelay(MEASUREMENT_PERIOD);
   }
 }

@@ -14,9 +14,10 @@
 #include "sharedData.h"
 #include "waterSenseTasks/taskMeasure/taskMeasure.h"
 #include "waterSenseTasks/taskSD/taskSD.h"
-#include "waterSenseTasks/taskClock/taskClock.h"
+#include "waterSenseTasks/taskClock2/taskClock2.h"
 #include "waterSenseTasks/taskSleep/taskSleep.h"
 #include "waterSenseTasks/taskVoltage/taskVoltage.h"
+#include "waterSenseTasks/taskWatch/taskWatch.h"
 
 
 //-----------------------------------------------------------------------------------------------------||
@@ -24,6 +25,16 @@
 
 // Non-volatile Variables
 RTC_DATA_ATTR uint32_t wakeCounter = 0; ///< A counter representing the number of wake cycles
+RTC_DATA_ATTR uint32_t lastKnownUnix = 0;
+RTC_DATA_ATTR uint32_t unixRtcStart = 0;
+RTC_DATA_ATTR bool internal = false;
+
+// Watchdog Checks
+Share<bool> clockCheck("Clock Working");
+Share<bool> sleepCheck("Sleep Working");
+Share<bool> measureCheck("Measure Working");
+Share<bool> voltageCheck("Voltage Working");
+Share<bool> sdCheck("SD Working");
 
 // Flags
 Share<bool> dataReady("Data Ready"); ///< A shared variable to indicate availability of new ultrasonic measurements
@@ -83,9 +94,10 @@ void setup()
   // Setup tasks
   xTaskCreate(taskMeasure, "Measurement Task", 8192, NULL, 3, NULL);
   xTaskCreate(taskSD, "SD Task", 8192, NULL, 7, NULL);
-  xTaskCreate(taskClock, "Clock Task", 8192, NULL, 5, NULL);
+  xTaskCreate(taskClock2, "Clock Task", 8192, NULL, 5, NULL);
   xTaskCreate(taskSleep, "Sleep Task", 8192, NULL, 1, NULL);
   xTaskCreate(taskVoltage, "Voltage Task", 8192, NULL, 1, NULL);
+  xTaskCreate(taskWatch, "Watchdog Task", 8192, NULL, 10, NULL);
 }
 
 void loop()

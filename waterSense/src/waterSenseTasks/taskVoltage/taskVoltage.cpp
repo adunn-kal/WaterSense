@@ -74,7 +74,7 @@ void taskVoltage(void* params)
       #endif
     }
     
-
+    voltageCheck.put(true);
     vTaskDelay(VOLTAGE_PERIOD);
   }
 }

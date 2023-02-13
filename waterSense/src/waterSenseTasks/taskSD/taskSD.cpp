@@ -65,6 +65,7 @@ void taskSD(void* params)
         state = 3;
       }
     }
+
     // Store data
     else if (state == 2)
     {
@@ -89,6 +90,7 @@ void taskSD(void* params)
 
       // Print data to serial monitor
       Serial.printf("%s, %d, %0.2f, %0.2f, %0.2f, %0.2f\n", displayTime.get(), myDist, myTemp, myHum, batteryVoltage, solarVoltage);
+      // Serial.println(myTime);
 
       state = 1;
     }
@@ -119,6 +121,7 @@ void taskSD(void* params)
       sdSleepReady.put(true);
     }
 
+    sdCheck.put(true);
     vTaskDelay(SD_PERIOD);
   }
 }

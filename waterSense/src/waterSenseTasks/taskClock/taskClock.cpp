@@ -25,6 +25,7 @@ void taskClock(void* params)
 {
   GpsClock myGPS(&Serial2, GPS_RX, GPS_TX, GPS_EN);
   Adafruit_GPS myClock = myGPS.begin();
+  
   uint8_t state = 0;
 
   while (true)
@@ -111,6 +112,7 @@ void taskClock(void* params)
       state = 1;
     }
 
+    clockCheck.put(true);
     vTaskDelay(CLOCK_PERIOD);
   }
 }

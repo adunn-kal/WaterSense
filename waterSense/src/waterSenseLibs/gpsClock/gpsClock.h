@@ -11,6 +11,7 @@
 #include <Arduino.h>
 #include "Adafruit_GPS.h"
 #include "UnixTime.h"
+#include "ESP32Time.h"
 
 class GpsClock
 {
@@ -21,9 +22,13 @@ class GpsClock
         gpio_num_t TX;
         gpio_num_t EN;
 
-        uint32_t UNIX_OFFSET = 28800;
+        uint32_t UNIX_OFFSET = 28800; // 8 hours
 
     public:
+        uint32_t unix;
+        uint32_t lastGpsUnix;
+        uint32_t internalStart;
+
         bool newData = false; ///< A flag to represent when new data has arrived
         uint32_t millisOffset = 0; ///< The millisecond offset between the the mcu and the GPS
         float latitude; ///< Signed latitude in degrees.minutes
@@ -48,4 +53,9 @@ class GpsClock
         String getDisplayTime(Adafruit_GPS &GPS); ///< A method to get a current human readable timestamp from the GPS
         uint64_t getSleepTime(Adafruit_GPS &GPS, uint8_t MINUTE_ALLLIGN, uint8_t READ_TIME); ///< A method to get the sleep time
         void sleep(Adafruit_GPS &GPS); ///< A method to put the GPS module to sleep
+
+        void updateInternal(Adafruit_GPS &GPS, ESP32Time &RTC);
+        String getUnixInternal(ESP32Time &RTC);
+        String getDisplayInternal(ESP32Time &RTC);
+        uint64_t getSleepInternal(ESP32Time &RTC, uint8_t MINUTE_ALLLIGN, uint8_t READ_TIME); ///< A method to get the sleep time
 };

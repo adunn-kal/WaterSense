@@ -79,18 +79,21 @@ void taskSleep(void* params)
     else if (state == 3)
     {
       // Get sleep time
-      uint64_t mySleep = sleepTime.get();
+      uint64_t mySleep = sleepTime.get() / 1000000;
 
       // Go to sleep
-      Serial.printf("%s: Going to sleep for %d seconds\n", displayTime.get(), mySleep/1000000);
+      Serial.printf("%s: Going to sleep for ", displayTime.get());
+      Serial.print(mySleep);
+      Serial.println(" seconds");
       
       gpio_deep_sleep_hold_en();
-      esp_sleep_enable_timer_wakeup(mySleep);
+      esp_sleep_enable_timer_wakeup(mySleep*1000000);
       esp_deep_sleep_start();
 
       state = 0;
     }
 
+    sleepCheck.put(true);
     vTaskDelay(SLEEP_PERIOD);
   }
 }
