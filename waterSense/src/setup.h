@@ -19,26 +19,27 @@
 #define VOLTAGE_PERIOD 1000 ///< Voltage task period in ms
 #define WATCHDOG_PERIOD 100 ///< Watchdog task period in ms
 
+
 /**
  * @brief Define this constant to enable variable duty cycle
  * @details If undefined, HI_READ and HI_ALLIGN are used
  * 
  */
-// #define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
+#define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
 //----------------------||
-#define HI_READ 60*1  //||
+#define HI_READ 60*5  //||
 #define MID_READ 60*2 //||
-#define LOW_READ 60*1 //||
+#define LOW_READ 60*2 //||
 //                    //||
-#define HI_ALLIGN 2  //||
+#define HI_ALLIGN 10  //||
 #define MID_ALLIGN 15 //||
-#define LOW_ALLIGN 30 //||
+#define LOW_ALLIGN 60 //||
 //----------------------||
 
 #define WAKE_CYCLES 15 ///< Number of wake cycles between reset checks
 #define FIX_DELAY 60*2 ///< Seconds to wait for first GPS fix
 
-#define WATCH_TIMER 5*1000 ///< ms of hang time before triggering a reset
+#define WATCH_TIMER 15*1000 ///< ms of hang time before triggering a reset
 
 #define R1b 9.54 ///< Larger resistor for battery voltage divider
 #define R2b 2.96 ///< Smaller resistor for battery voltage divider

@@ -54,7 +54,8 @@ void taskSleep(void* params)
     else if (state == 1)
     {
       // If runTimer, go to state 2
-      if ((millis() - runTimer) > READ_TIME.get()*1000)
+      uint16_t myReadTime = READ_TIME.get();
+      if ((millis() - runTimer) > myReadTime*1000)
       {
         Serial.println("Sleep state 1 -> 2");
 
@@ -79,15 +80,17 @@ void taskSleep(void* params)
     else if (state == 3)
     {
       // Get sleep time
-      uint64_t mySleep = sleepTime.get() / 1000000;
+      uint64_t mySleep = sleepTime.get();
+      // mySleep /= 1000000;
 
       // Go to sleep
+      Serial.printf("Read time: %d minutes\nMinute Allign: %d\n", READ_TIME.get()/60, MINUTE_ALLIGN.get());
       Serial.printf("%s: Going to sleep for ", displayTime.get());
-      Serial.print(mySleep);
+      Serial.print(mySleep/1000000);
       Serial.println(" seconds");
       
       gpio_deep_sleep_hold_en();
-      esp_sleep_enable_timer_wakeup(mySleep*1000000);
+      esp_sleep_enable_timer_wakeup(mySleep);
       esp_deep_sleep_start();
 
       state = 0;

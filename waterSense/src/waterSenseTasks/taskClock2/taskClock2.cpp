@@ -115,15 +115,18 @@ void taskClock2(void* params)
     // Sleep
     else if (state == 3)
     {
+      uint16_t myAllign = MINUTE_ALLIGN.get();
+      uint16_t myRead = READ_TIME.get();
+
       // Calculate sleep time
       if (myGPS.fixType)
       {
-        sleepTime.put(myGPS.getSleepInternal(myRTC, MINUTE_ALLIGN.get(), READ_TIME.get()));
+        sleepTime.put(myGPS.getSleepInternal(myRTC, myAllign, myRead));
       }
 
       else
       {
-        sleepTime.put(myGPS.getSleepTime(myClock, MINUTE_ALLIGN.get(), READ_TIME.get()));
+        sleepTime.put(myGPS.getSleepTime(myClock, myAllign, myRead));
       }
       
 

@@ -51,11 +51,11 @@ class GpsClock
         void read(Adafruit_GPS &GPS); ///< A method to read data from the GPS module
         String getUnixTime(Adafruit_GPS &GPS); ///< A method to get a current Unix timestamp from the GPS
         String getDisplayTime(Adafruit_GPS &GPS); ///< A method to get a current human readable timestamp from the GPS
-        uint64_t getSleepTime(Adafruit_GPS &GPS, uint8_t MINUTE_ALLLIGN, uint8_t READ_TIME); ///< A method to get the sleep time
+        uint64_t getSleepTime(Adafruit_GPS &GPS, uint16_t MINUTE_ALLLIGN, uint16_t READ_TIME); ///< A method to get the sleep time
         void sleep(Adafruit_GPS &GPS); ///< A method to put the GPS module to sleep
 
         void updateInternal(Adafruit_GPS &GPS, ESP32Time &RTC);
         String getUnixInternal(ESP32Time &RTC);
         String getDisplayInternal(ESP32Time &RTC);
-        uint64_t getSleepInternal(ESP32Time &RTC, uint8_t MINUTE_ALLLIGN, uint8_t READ_TIME); ///< A method to get the sleep time
+        uint64_t getSleepInternal(ESP32Time &RTC, uint16_t MINUTE_ALLLIGN, uint16_t READ_TIME); ///< A method to get the sleep time
 };

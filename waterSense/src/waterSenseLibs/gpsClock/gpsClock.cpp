@@ -217,7 +217,7 @@ String GpsClock :: getDisplayTime(Adafruit_GPS &GPS)
  * @param READ_TIME The number of seconds to read data
  * @return uint64_t The number of microseconds to sleep
  */
-uint64_t GpsClock :: getSleepTime(Adafruit_GPS &GPS, uint8_t MINUTE_ALLIGN, uint8_t READ_TIME)
+uint64_t GpsClock :: getSleepTime(Adafruit_GPS &GPS, uint16_t MINUTE_ALLIGN, uint16_t READ_TIME)
 {
     // If the gps has a fix, use it to calculate the next read time
     if (fixType)
@@ -312,17 +312,24 @@ String GpsClock :: getDisplayInternal(ESP32Time &RTC)
     return displayString;
 }
 
-uint64_t GpsClock :: getSleepInternal(ESP32Time &RTC, uint8_t MINUTE_ALLIGN, uint8_t READ_TIME)
+uint64_t GpsClock :: getSleepInternal(ESP32Time &RTC, uint16_t MINUTE_ALLIGN, uint16_t READ_TIME)
 {
+    uint8_t myMinute = RTC.getMinute();
+    uint8_t mySecond = RTC.getSecond();
+
     // Calculate next time in uS until next measurement interval
-    uint64_t next_measurement = (MINUTE_ALLIGN - (RTC.getMinute() % MINUTE_ALLIGN)) * (60 * 1000000);
-    next_measurement -= RTC.getSecond() * 1000000;
+    uint64_t next_measurement = (MINUTE_ALLIGN - (myMinute % MINUTE_ALLIGN)) * (60 * 1000000);
+    next_measurement -= mySecond * 1000000;
     next_measurement -= (RTC.getMillis() % 1000) * 1000;
 
     // Subtract off half of the read time
     if (next_measurement > (READ_TIME*1000000/2))
     {
         next_measurement -= READ_TIME*1000000/2;
+
+        // Serial.printf("Current time: %d:%d\n", myMinute, mySecond);
+        // Serial.printf("Wake at %d:%d\n", myMinute + (next_measurement/1000000)/60, mySecond + (next_measurement/1000000)%60);
+
         return next_measurement;
     }
 
