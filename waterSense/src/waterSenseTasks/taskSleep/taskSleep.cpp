@@ -81,16 +81,26 @@ void taskSleep(void* params)
     {
       // Get sleep time
       uint64_t mySleep = sleepTime.get();
+      uint64_t myAllign = MINUTE_ALLIGN.get();
       // mySleep /= 1000000;
 
       // Go to sleep
-      Serial.printf("Read time: %d minutes\nMinute Allign: %d\n", READ_TIME.get()/60, MINUTE_ALLIGN.get());
+      Serial.printf("Read time: %d minutes\nMinute Allign: %d\n", READ_TIME.get()/60, myAllign);
       Serial.printf("%s: Going to sleep for ", displayTime.get());
       Serial.print(mySleep/1000000);
       Serial.println(" seconds");
       
       gpio_deep_sleep_hold_en();
-      esp_sleep_enable_timer_wakeup(mySleep);
+
+      if ((mySleep/1000000) > (myAllign*60))
+      {
+        esp_sleep_enable_timer_wakeup(myAllign*60*1000000);
+      }
+
+      else
+      {
+        esp_sleep_enable_timer_wakeup(mySleep);
+      }
       esp_deep_sleep_start();
 
       state = 0;

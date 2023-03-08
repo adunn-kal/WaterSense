@@ -106,7 +106,7 @@ void taskClock(void* params)
     // Get fix
     else if (state == 4)
     {
-      wakeCounter = 0;
+      // wakeCounter = 0;
       wakeReady.put(myGPS.getFix(myClock, FIX_DELAY));
 
       state = 1;

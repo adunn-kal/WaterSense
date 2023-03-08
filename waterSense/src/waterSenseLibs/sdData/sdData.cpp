@@ -9,6 +9,7 @@
  */
 
 #include <Arduino.h>
+#include "sharedData.h"
 #include "SD.h"
 #include <utility>
 #include "sdData.h"
@@ -81,6 +82,11 @@ File SD_Data :: createFile(bool hasFix, uint32_t wakeCounter, String time)
 
     // Filenames are at most 8 characters + 6("/Data/") + 4(".txt") + null terminator = 19
     if (hasFix) // If the gps has a fix, use its timestamp
+    {
+        fileName += String(time.toInt(), HEX);
+        fileName += ".txt";
+    }
+    else if (lastKnownUnix) // If we have switched over to the RTC, use it
     {
         fileName += String(time.toInt(), HEX);
         fileName += ".txt";
