@@ -12,13 +12,12 @@
 //-----------------------------------------------------------------------------------------------------||
 //---------- Define Constants -------------------------------------------------------------------------||
 
-#define MEASUREMENT_PERIOD 100 ///< Measurement task period in ms
-#define SD_PERIOD 10 ///< SD task period in ms
-#define CLOCK_PERIOD 10 ///< Clock task period in ms
-#define SLEEP_PERIOD 100 ///< Sleep task period in ms
-#define VOLTAGE_PERIOD 1000 ///< Voltage task period in ms
-#define WATCHDOG_PERIOD 100 ///< Watchdog task period in ms
-
+/**
+ * @brief Define this constant to enable continuous measurements
+ * @details Writes data to the SD card at the specified read intervals but does not sleep
+ * 
+ */
+#define CONTINUOUS
 
 /**
  * @brief Define this constant to enable variable duty cycle
@@ -27,11 +26,11 @@
  */
 #define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
 //----------------------||
-#define HI_READ 60*5  //||
+#define HI_READ 30*1  //||
 #define MID_READ 60*2 //||
 #define LOW_READ 60*2 //||
 //                    //||
-#define HI_ALLIGN 15  //||
+#define HI_ALLIGN 2  //||
 #define MID_ALLIGN 30 //||
 #define LOW_ALLIGN 60 //||
 //----------------------||
@@ -49,6 +48,13 @@
 
 #define R1s 10.0 ///< Resistor for solar panel voltage divider
 #define R2s 10.0 ///< Resistor for solar panel voltage divider
+
+#define MEASUREMENT_PERIOD 100 ///< Measurement task period in ms
+#define SD_PERIOD 10 ///< SD task period in ms
+#define CLOCK_PERIOD 10 ///< Clock task period in ms
+#define SLEEP_PERIOD 100 ///< Sleep task period in ms
+#define VOLTAGE_PERIOD 1000 ///< Voltage task period in ms
+#define WATCHDOG_PERIOD 100 ///< Watchdog task period in ms
 
 //-----------------------------------------------------------------------------------------------------||
 //-----------------------------------------------------------------------------------------------------||

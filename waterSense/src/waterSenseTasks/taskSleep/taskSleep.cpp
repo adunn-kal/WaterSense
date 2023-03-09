@@ -84,23 +84,30 @@ void taskSleep(void* params)
       uint64_t myAllign = MINUTE_ALLIGN.get();
       // mySleep /= 1000000;
 
-      // Go to sleep
-      Serial.printf("Read time: %d minutes\nMinute Allign: %d\n", READ_TIME.get()/60, myAllign);
-      Serial.printf("%s: Going to sleep for ", displayTime.get());
-      Serial.print(mySleep/1000000);
-      Serial.println(" seconds");
-      
+      // Go to sleep    
       gpio_deep_sleep_hold_en();
 
-      if ((mySleep/1000000) > (myAllign*60))
-      {
-        esp_sleep_enable_timer_wakeup(myAllign*60*1000000);
-      }
+      #ifdef CONTINUOUS // If set to continuous mode, sleep for 1uS
+        Serial.println("Writing to sd card");
+        esp_sleep_enable_timer_wakeup(1);
 
-      else
-      {
-        esp_sleep_enable_timer_wakeup(mySleep);
-      }
+      #else // If not set to continuous mode, sleep for calculated time
+        Serial.printf("Read time: %d minutes\nMinute Allign: %d\n", READ_TIME.get()/60, myAllign);
+        Serial.printf("%s: Going to sleep for ", displayTime.get());
+        Serial.print(mySleep/1000000);
+        Serial.println(" seconds");
+
+        if ((mySleep/1000000) > (myAllign*60))
+        {
+          esp_sleep_enable_timer_wakeup(myAllign*60*1000000);
+        }
+
+        else
+        {
+          esp_sleep_enable_timer_wakeup(mySleep);
+        }
+      #endif
+      
       esp_deep_sleep_start();
 
       state = 0;
