@@ -17,20 +17,20 @@
  * @details Writes data to the SD card at the specified read intervals but does not sleep
  * 
  */
-#define CONTINUOUS
+// #define CONTINUOUS
 
 /**
  * @brief Define this constant to enable variable duty cycle
  * @details If undefined, HI_READ and HI_ALLIGN are used
  * 
  */
-#define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
+// #define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
 //----------------------||
-#define HI_READ 30*1  //||
+#define HI_READ 60*5  //||
 #define MID_READ 60*2 //||
 #define LOW_READ 60*2 //||
 //                    //||
-#define HI_ALLIGN 2  //||
+#define HI_ALLIGN 15  //||
 #define MID_ALLIGN 30 //||
 #define LOW_ALLIGN 60 //||
 //----------------------||
