@@ -83,6 +83,7 @@ Share<uint16_t> MINUTE_ALLIGN("Minute Allign"); ///< The current minute allignme
 void setup()
 {
   // Setup
+  setCpuFrequencyMhz(40);
   Serial.begin(115200);
   while (!Serial) {}
   Serial.println("\n\n\n\n");
