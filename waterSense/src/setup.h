@@ -24,13 +24,13 @@
  * @details If undefined, HI_READ and HI_ALLIGN are used
  * 
  */
-// #define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
+#define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
 //----------------------||
-#define HI_READ 60*4  //||
+#define HI_READ 60*6  //||
 #define MID_READ 60*2 //||
 #define LOW_READ 60*2 //||
 //                    //||
-#define HI_ALLIGN 6  //||
+#define HI_ALLIGN 15  //||
 #define MID_ALLIGN 30 //||
 #define LOW_ALLIGN 60 //||
 //----------------------||
