@@ -31,9 +31,17 @@ SD_Data :: SD_Data(gpio_num_t pin)
     // Start SD stuff
     pinMode(CS, OUTPUT);
 
+    uint16_t longTimer = millis();
     uint16_t timer = millis();
     while (!SD.begin(CS))
     {
+        // Restart if more than 10 seconds
+        if ((millis() - longTimer) > 10000)
+        {
+            assert(false);
+        }
+
+        // Blink LED
         if ((millis() - timer) > 300)
         {
             timer = millis();
