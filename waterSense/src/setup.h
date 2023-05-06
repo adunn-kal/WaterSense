@@ -41,6 +41,13 @@
 
 #define WATCH_TIMER 15*1000 ///< ms of hang time before triggering a reset
 
+#define MEASUREMENT_PERIOD 100 ///< Measurement task period in ms
+#define SD_PERIOD 10 ///< SD task period in ms
+#define CLOCK_PERIOD 10 ///< Clock task period in ms
+#define SLEEP_PERIOD 100 ///< Sleep task period in ms
+#define VOLTAGE_PERIOD 1000 ///< Voltage task period in ms
+#define WATCHDOG_PERIOD 100 ///< Watchdog task period in ms
+
 // #define R1b 9.54 ///< Larger resistor for battery voltage divider
 // #define R2b 2.96 ///< Smaller resistor for battery voltage divider
 #define R1b 9.25 ///< Larger resistor for battery voltage divider
@@ -48,13 +55,6 @@
 
 #define R1s 10.0 ///< Resistor for solar panel voltage divider
 #define R2s 10.0 ///< Resistor for solar panel voltage divider
-
-#define MEASUREMENT_PERIOD 100 ///< Measurement task period in ms
-#define SD_PERIOD 10 ///< SD task period in ms
-#define CLOCK_PERIOD 10 ///< Clock task period in ms
-#define SLEEP_PERIOD 100 ///< Sleep task period in ms
-#define VOLTAGE_PERIOD 1000 ///< Voltage task period in ms
-#define WATCHDOG_PERIOD 100 ///< Watchdog task period in ms
 
 //-----------------------------------------------------------------------------------------------------||
 //-----------------------------------------------------------------------------------------------------||
