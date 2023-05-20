@@ -26,7 +26,7 @@
  */
 // #define VARIABLE_DUTY ///< Define this constant to enable variable duty cycle
 //----------------------||
-#define HI_READ 60*4  //||
+#define HI_READ 60*5  //||
 #define MID_READ 60*2 //||
 #define LOW_READ 60*2 //||
 //                    //||
